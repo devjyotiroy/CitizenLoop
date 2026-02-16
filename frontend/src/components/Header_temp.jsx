@@ -280,7 +280,6 @@ export default function Header() {
                 <span className="logo-loop">Loop</span>
                 <div className="logo-badge">®</div>
               </div>
-              <div className="slogan">Your Voice, Our Commitment</div>
             </div>
             <button className="close-menu" onClick={toggleMobileMenu}>
               <svg viewBox="0 0 24 24" width="24" height="24">
@@ -886,24 +885,37 @@ export default function Header() {
         @media (max-width: 1024px) {
           .mobile-menu-toggle {
             display: flex;
+            order: 1;
           }
           
           .header-content {
             padding: 10px 20px;
             justify-content: space-between;
+            align-items: center;
+            flex-wrap: nowrap;
+            flex-direction: row-reverse;
           }
           
           .logo-section {
-            flex: 0 1 auto;
-            max-width: calc(100% - 50px);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            text-align: right;
+          }
+          
+          .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
           }
           
           .logo {
             font-size: 1.8rem;
+            margin-bottom: 0;
           }
           
           .logo-subtitle {
-            font-size: 0.65rem;
+            display: none;
           }
           
           .slogan {
@@ -1111,19 +1123,35 @@ export default function Header() {
             padding: 8px 12px;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: nowrap;
+            flex-direction: row-reverse;
           }
           
           .logo-section {
-            flex: 0 1 auto;
-            max-width: calc(100% - 45px);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            text-align: right;
+          }
+          
+          .mobile-menu-toggle {
+            order: 1;
+            width: 28px;
+            height: 22px;
+          }
+          
+          .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
           }
           
           .logo {
             font-size: 1.4rem;
+            margin-bottom: 0;
           }
           
           .logo-subtitle {
-            font-size: 0.5rem;
             display: none;
           }
           

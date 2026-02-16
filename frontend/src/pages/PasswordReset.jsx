@@ -32,7 +32,7 @@ function PasswordResetRequest() {
       </div>
 
       {/* Background Text */}
-      <h1 className="background-text">HelpForYou</h1>
+      <h1 className="background-text">Citizen Loop</h1>
 
       {/* Main Form Container */}
       <div className="form-container">

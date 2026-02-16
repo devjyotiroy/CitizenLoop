@@ -157,14 +157,14 @@ router.post("/login", async (req, res) => {
       <body>
         <div class="container">
           <div class="header">
-            <h1 class="logo">HelpForYou</h1>
+            <h1 class="logo">Citizen Loop</h1>
             <p class="tagline">Your Trusted Support Partner</p>
           </div>
           
           <div class="content">
             <h2 style="color: #0f5132; margin-top: 0;">Your One-Time Password</h2>
             <p>Hello ${user.name},</p>
-            <p>We received a request to sign in to your HelpForYou account. Use the following OTP to complete your login:</p>
+            <p>We received a request to sign in to your Citizen Loop account. Use the following OTP to complete your login:</p>
             
             <div class="otp-container">
               <p style="margin: 0; color: #6c757d;">Your verification code:</p>
@@ -174,15 +174,15 @@ router.post("/login", async (req, res) => {
             
             <p>If you didn't request this code, please ignore this email or contact support if you have concerns.</p>
             
-            <a href="http://localhost:5173" class="button">Go to HelpForYou</a>
+            <a href="http://localhost:5173" class="button">Go to Citizen Loop</a>
           </div>
           
           <div class="footer">
-            <p>Need help? Contact our support team at support@helpforyou.com</p>
+            <p>Need help? Contact our support team at support@Citizen Loop.com</p>
             <div class="social-links">
               <a href="#">Facebook</a> • <a href="#">Twitter</a> • <a href="#">Instagram</a>
             </div>
-            <p>© ${new Date().getFullYear()} HelpForYou. All rights reserved.</p>
+            <p>© ${new Date().getFullYear()} Citizen Loop. All rights reserved.</p>
             <p>Design and Developed By Aayush Shivastava</p>
           </div>
         </div>
@@ -190,7 +190,7 @@ router.post("/login", async (req, res) => {
       </html>
     `;
 
-    await sendEmail(email, "Your OTP Code - HelpForYou", `Your OTP is ${otp}`, otpHtml);
+    await sendEmail(email, "Your OTP Code - Citizen Loop", `Your OTP is ${otp}`, otpHtml);
 
     res.json({ message: "OTP sent to your email. Please verify to complete login." });
   } catch (error) {
@@ -216,8 +216,9 @@ router.post("/verify-otp", async (req, res) => {
 
     const token = jwt.sign(
       { id: user._id, role: user.role },
-      process.env.JWT_SECRET,
-      { expiresIn: "1d" }
+      process.env.JWT_SECRET
+      // ,
+      // { expiresIn: "1d" }
     );
 
     // Get device and location information from request
@@ -259,7 +260,7 @@ router.post("/verify-otp", async (req, res) => {
       <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Login Alert - HelpForYou</title>
+        <title>Login Alert - Citizen Loop</title>
         <style>
           * {
             margin: 0;
@@ -476,7 +477,7 @@ router.post("/verify-otp", async (req, res) => {
       <body>
         <div class="container">
           <div class="header">
-            <h1 class="logo">HelpForYou</h1>
+            <h1 class="logo">Citizen Loop</h1>
             <p class="tagline">Your Trusted Support Partner</p>
           </div>
           
@@ -487,7 +488,7 @@ router.post("/verify-otp", async (req, res) => {
             
             <h2>New Login Detected</h2>
             <p>Hello <strong>${user.name}</strong>,</p>
-            <p>We noticed a recent login to your HelpForYou account. Here are the details:</p>
+            <p>We noticed a recent login to your Citizen Loop account. Here are the details:</p>
             
             <div class="login-details">
               <div class="detail-row">
@@ -542,13 +543,13 @@ router.post("/verify-otp", async (req, res) => {
           </div>
           
           <div class="footer">
-            <p>This is an automated security alert from HelpForYou. Please do not reply to this email.</p>
+            <p>This is an automated security alert from Citizen Loop. Please do not reply to this email.</p>
             <div class="footer-links">
               <a href="http://localhost:5173/help">Help Center</a>
               <a href="http://localhost:5173/privacy">Privacy Policy</a>
               <a href="http://localhost:5173/contact">Contact Support</a>
             </div>
-            <p>© ${new Date().getFullYear()} HelpForYou. All rights reserved.</p>
+            <p>© ${new Date().getFullYear()} Citizen Loop. All rights reserved.</p>
             <p>Design and Developed By Aayush Shivastava</p>
           </div>
         </div>
@@ -558,8 +559,8 @@ router.post("/verify-otp", async (req, res) => {
 
     await sendEmail(
       user.email, 
-      "Login Alert - HelpForYou", 
-      `Hello ${user.name},\n\nWe noticed a recent login to your HelpForYou account on ${loginTime}.\n\nDevice: ${deviceType}\nBrowser: ${browser} on ${os}\nLocation: ${location}\nIP Address: ${ipAddress}\n\nIf this was you, you can ignore this alert. If not, please reset your password immediately.`, 
+      "Login Alert - Citizen Loop", 
+      `Hello ${user.name},\n\nWe noticed a recent login to your Citizen Loop account on ${loginTime}.\n\nDevice: ${deviceType}\nBrowser: ${browser} on ${os}\nLocation: ${location}\nIP Address: ${ipAddress}\n\nIf this was you, you can ignore this alert. If not, please reset your password immediately.`, 
       loginAlertHtml
     );
 
@@ -601,7 +602,7 @@ router.post("/forgot-password", async (req, res) => {
       <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Reset Your Password - HelpForYou</title>
+        <title>Reset Your Password - Citizen Loop</title>
         <style>
           body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -674,14 +675,14 @@ router.post("/forgot-password", async (req, res) => {
       <body>
         <div class="container">
           <div class="header">
-            <h1 class="logo">HelpForYou</h1>
+            <h1 class="logo">Citizen Loop</h1>
             <p style="color: rgba(255, 255, 255, 0.8); margin: 5px 0 0;">Password Reset</p>
           </div>
           
           <div class="content">
             <h2 style="color: #0f5132; margin-top: 0;">Reset Your Password</h2>
             <p>Hello <strong>${user.name}</strong>,</p>
-            <p>We received a request to reset your password for your HelpForYou account. Click the button below to proceed:</p>
+            <p>We received a request to reset your password for your Citizen Loop account. Click the button below to proceed:</p>
             
             <div class="timer">
               ⏰ This link will expire in 15 minutes
@@ -696,8 +697,8 @@ router.post("/forgot-password", async (req, res) => {
           </div>
           
           <div class="footer">
-            <p>This is an automated message from HelpForYou. Please do not reply to this email.</p>
-            <p>© ${new Date().getFullYear()} HelpForYou. All rights reserved.</p>
+            <p>This is an automated message from Citizen Loop. Please do not reply to this email.</p>
+            <p>© ${new Date().getFullYear()} Citizen Loop. All rights reserved.</p>
             <p>Design and Developed By Aayush Shivastava</p>
           </div>
         </div>
@@ -705,7 +706,7 @@ router.post("/forgot-password", async (req, res) => {
       </html>
     `;
 
-    await sendEmail(user.email, "Reset Your Password - HelpForYou", resetPasswordHtml);
+    await sendEmail(user.email, "Reset Your Password - Citizen Loop", resetPasswordHtml);
 
     res.json({ message: "Password reset email sent" });
   } catch (error) {

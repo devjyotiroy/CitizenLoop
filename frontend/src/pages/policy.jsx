@@ -9,7 +9,7 @@ export default function PolicyPage() {
   return (
     <div className="policy-page">
       <header className="policy-header">
-        <h1>HelpForYou Website Policies & Terms</h1>
+        <h1>Citizen Loop Website Policies & Terms</h1>
         <p>Transparent, Secure, and User-Friendly Service Policies</p>
       </header>
 
@@ -17,7 +17,7 @@ export default function PolicyPage() {
       <section className="policy-section">
         <h2><FaFileContract className="icon"/> 1. Introduction</h2>
         <p>
-          Welcome to <strong>HelpForYou</strong>. By accessing or using our website, you agree to comply with and be bound by the following terms and policies. 
+          Welcome to <strong>Citizen Loop</strong>. By accessing or using our website, you agree to comply with and be bound by the following terms and policies. 
           If you do not agree with any part of this policy, please refrain from using the website.
         </p>
       </section>
@@ -26,8 +26,8 @@ export default function PolicyPage() {
       <section className="policy-section">
         <h2><FaClipboardList className="icon"/> 2. Terms of Use</h2>
         <ul>
-          <li><strong>Acceptance of Terms:</strong> By using HelpForYou, you acknowledge that you have read, understood, and agree to abide by these terms.</li>
-          <li><strong>Website Purpose:</strong> HelpForYou provides a platform where users can raise complaints, track their status, and access resources.</li>
+          <li><strong>Acceptance of Terms:</strong> By using Citizen Loop, you acknowledge that you have read, understood, and agree to abide by these terms.</li>
+          <li><strong>Website Purpose:</strong> Citizen Loop provides a platform where users can raise complaints, track their status, and access resources.</li>
           <li><strong>Eligibility:</strong> You must be at least 18 years old or have guardian consent.</li>
           <li><strong>Account Responsibility:</strong> Users are responsible for all activities under their account.</li>
           <li><strong>Prohibited Activities:</strong> No spamming, hacking, or illegal activities are allowed.</li>
@@ -61,7 +61,7 @@ export default function PolicyPage() {
       <section className="policy-section">
         <h2><FaLock className="icon"/> 5. Intellectual Property & Security</h2>
         <ul>
-          <li><strong>Ownership:</strong> All website content is owned by HelpForYou or its licensors.</li>
+          <li><strong>Ownership:</strong> All website content is owned by Citizen Loop or its licensors.</li>
           <li><strong>Restrictions:</strong> Copying or redistributing content without permission is prohibited.</li>
           <li><strong>User-Generated Content:</strong> By submitting, you grant a license for service purposes.</li>
         </ul>
@@ -73,7 +73,7 @@ export default function PolicyPage() {
         <ul>
           <li><strong>No Professional Advice:</strong> Website content is for general information only.</li>
           <li><strong>Accuracy of Information:</strong> We do not guarantee completeness or correctness of content.</li>
-          <li><strong>Limitation of Liability:</strong> HelpForYou is not liable for damages arising from use of the website.</li>
+          <li><strong>Limitation of Liability:</strong> Citizen Loop is not liable for damages arising from use of the website.</li>
         </ul>
       </section>
 
@@ -82,7 +82,7 @@ export default function PolicyPage() {
         <h2><FaGavel className="icon"/> 7. Terms & Conditions</h2>
         <ul>
           <li><strong>User Agreement:</strong> By using this website, you agree to comply with all terms, rules, and policies.</li>
-          <li><strong>Account Termination:</strong> HelpForYou may suspend or terminate accounts for violation of terms.</li>
+          <li><strong>Account Termination:</strong> Citizen Loop may suspend or terminate accounts for violation of terms.</li>
           <li><strong>Service Availability:</strong> We strive to keep services online but do not guarantee uninterrupted access.</li>
         </ul>
       </section>
@@ -118,7 +118,7 @@ export default function PolicyPage() {
       <section className="policy-section">
         <h2><FaFileAlt className="icon"/> 11. Updates to Policy</h2>
         <p>
-          HelpForYou reserves the right to update these policies and terms at any time. Users are encouraged to review the policies periodically for changes.
+          Citizen Loop reserves the right to update these policies and terms at any time. Users are encouraged to review the policies periodically for changes.
         </p>
       </section>
 
@@ -128,7 +128,7 @@ export default function PolicyPage() {
         <p>
           For any questions or concerns regarding these policies, contact us at:
           <br/>
-          <strong>Email:</strong> support@helpforyou.com
+          <strong>Email:</strong> support@Citizen Loop.com
           <br/>
           <strong>Website Form:</strong> <a href="/contact">Contact Us</a>
         </p>

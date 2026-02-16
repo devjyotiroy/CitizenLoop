@@ -4,8 +4,7 @@ import cors from "cors";
 import multer from "multer";
 import connectDB from "./config/db.js";
 import userRoutes from "./routes/userRoutes.js";
-import PoliceComplaintRoutes from "./routes/PoliceComplaintRoutes.js";
-import CyberComplaint from "./routes/CyberComplaint.js";
+import CitizenComplaint from "./routes/CitizenComplaint.js";
 dotenv.config();
 connectDB();
 
@@ -24,15 +23,14 @@ app.use("/uploads", express.static("uploads"));
 
 // ------------------- ROUTES -------------------
 app.get("/", (req, res) => {
-  res.send("HelpForYou API is running...");
+  res.send("Citizen Loop API is running...");
 });
 
 app.use("/api/users", userRoutes);
-app.use("/api/complaints", PoliceComplaintRoutes);
-app.use("/api/cyber-complaints", CyberComplaint);
+app.use("/api/complaints", CitizenComplaint);
 
 app.get('/', (req, res) => {
-  res.json({ message: 'HelpForYou API is running!' });
+  res.json({ message: 'Citizen Loop API is running!' });
 });
 
 // ------------------- ERROR HANDLING -------------------

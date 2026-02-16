@@ -19,7 +19,7 @@ const sendEmail = async (to, subject, text, html = null, attachments = []) => {
     });
 
     const mailOptions = {
-      from: `"HelpForYou" <${process.env.EMAIL}>`,
+      from: `"Citizen Loop" <${process.env.EMAIL}>`,
       to,
       subject,
       text,

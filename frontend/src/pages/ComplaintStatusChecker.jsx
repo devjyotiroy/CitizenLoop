@@ -17,30 +17,16 @@ export default function ComplaintStatus() {
     setError("");
     setComplaint(null);
 
-    const urls = [
-      `http://localhost:5000/api/complaints/search/${complaintId.trim()}`,
-      `http://localhost:5000/api/cyber-complaints/search/${complaintId.trim()}`
-    ];
-
     try {
-      const promises = urls.map((url) => axios.get(url).catch(() => null));
-      const responses = await Promise.all(promises);
-
-      let foundComplaint = null;
-      for (let res of responses) {
-        if (res && res.data && res.data.success && res.data.complaint) {
-          foundComplaint = res.data.complaint;
-          break;
-        }
-      }
-
-      if (foundComplaint) {
-        setComplaint(foundComplaint);
+      const res = await axios.get(`http://localhost:5000/api/complaints/search/${complaintId.trim()}`);
+      
+      if (res && res.data && res.data.success && res.data.complaint) {
+        setComplaint(res.data.complaint);
       } else {
-        setError("Complaint not found in any department!");
+        setError("Complaint not found!");
       }
     } catch (err) {
-      setError(err.response?.data?.message || "Something went wrong. Please try again.");
+      setError(err.response?.data?.message || "Complaint not found. Please check your Complaint ID.");
     } finally {
       setLoading(false);
     }
@@ -324,27 +310,14 @@ export default function ComplaintStatus() {
             </div>
           </div>
 
-          {/* Cyber Complaint */}
-          {complaint.complaintType ? (
-            <>
-              <div style={styles.detailRow}><b style={styles.detailLabel}>Name:</b> {complaint.name}</div>
-              <div style={styles.detailRow}><b style={styles.detailLabel}>Email:</b> {complaint.email}</div>
-              <div style={styles.detailRow}><b style={styles.detailLabel}>Phone:</b> {complaint.phone}</div>
-              <div style={styles.detailRow}><b style={styles.detailLabel}>Complaint Type:</b> {complaint.complaintType}</div>
-              <div style={styles.detailRow}><b style={styles.detailLabel}>Subject:</b> {complaint.subject}</div>
-              <div style={styles.detailRow}><b style={styles.detailLabel}>Description:</b> {complaint.description}</div>
-            </>
-          ) : (
-            /* Police Complaint */
-            <>
-              <div style={styles.detailRow}><b style={styles.detailLabel}>Name:</b> {complaint.name}</div>
-              <div style={styles.detailRow}><b style={styles.detailLabel}>Email:</b> {complaint.email}</div>
-              <div style={styles.detailRow}><b style={styles.detailLabel}>Mobile:</b> {complaint.mobile}</div>
-              <div style={styles.detailRow}><b style={styles.detailLabel}>District:</b> {complaint.district}</div>
-              <div style={styles.detailRow}><b style={styles.detailLabel}>Location:</b> {complaint.location}</div>
-              <div style={styles.detailRow}><b style={styles.detailLabel}>Complaint:</b> {complaint.complaint}</div>
-            </>
-          )}
+          {/* Complaint Details */}
+          <div style={styles.detailRow}><b style={styles.detailLabel}>Name:</b> {complaint.name}</div>
+          <div style={styles.detailRow}><b style={styles.detailLabel}>Email:</b> {complaint.email}</div>
+          <div style={styles.detailRow}><b style={styles.detailLabel}>Mobile:</b> {complaint.mobile}</div>
+          {complaint.district && <div style={styles.detailRow}><b style={styles.detailLabel}>District:</b> {complaint.district}</div>}
+          {complaint.location && <div style={styles.detailRow}><b style={styles.detailLabel}>Location:</b> {complaint.location}</div>}
+          {complaint.complaintType && <div style={styles.detailRow}><b style={styles.detailLabel}>Complaint Type:</b> {complaint.complaintType}</div>}
+          <div style={styles.detailRow}><b style={styles.detailLabel}>Complaint:</b> {complaint.complaint}</div>
 
           {/* Progress Tracker */}
           {steps.includes(complaint.status) && (

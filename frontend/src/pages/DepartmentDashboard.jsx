@@ -15,6 +15,8 @@ const DepartmentDashboard = () => {
   const [selectedComplaint, setSelectedComplaint] = useState(null);
   const [showDetailsModal, setShowDetailsModal] = useState(false);
   const [actionLoading, setActionLoading] = useState(null);
+  const [showAssignModal, setShowAssignModal] = useState(false);
+  const [assignData, setAssignData] = useState({ officerName: '', officerPhone: '', complaintId: '' });
 
   // Department credentials from environment variables with fallback
   const departmentCredentials = {
@@ -41,16 +43,6 @@ const DepartmentDashboard = () => {
       department: 'police', 
       district: 'Bhagalpur', 
       name: 'Bhagalpur Police' 
-    },
-    'CYB118': { 
-      password: 'CYB118', 
-      department: 'cyber', 
-      name: 'Cyber Crime Unit' 
-    },
-    'CYB119': { 
-      password: 'CYB119', 
-      department: 'cyber', 
-      name: 'Cyber Security Division' 
     }
   };
 
@@ -99,14 +91,9 @@ const DepartmentDashboard = () => {
   const fetchComplaints = async (department, district = 'all') => {
     setLoading(true);
     try {
-      let endpoint = '';
-      if (department === 'police') {
-        endpoint = district === 'All Districts' 
-          ? 'http://localhost:5000/api/complaints'
-          : `http://localhost:5000/api/complaints?district=${district}`;
-      } else {
-        endpoint = 'http://localhost:5000/api/cyber-complaints';
-      }
+      const endpoint = district === 'All Districts' 
+        ? 'http://localhost:5000/api/complaints'
+        : `http://localhost:5000/api/complaints?district=${district}`;
 
       const response = await axios.get(endpoint);
       setComplaints(response.data.complaints || []);
@@ -122,10 +109,7 @@ const DepartmentDashboard = () => {
   const updateComplaintStatus = async (complaintId, newStatus, reason = '') => {
     setActionLoading(complaintId);
     try {
-      const isPoliceComplaint = complaintId.startsWith('POL');
-      const endpoint = isPoliceComplaint 
-        ? `http://localhost:5000/api/complaints/update-status/${complaintId}`
-        : `http://localhost:5000/api/cyber-complaints/update-status/${complaintId}`;
+      const endpoint = `http://localhost:5000/api/complaints/update-status/${complaintId}`;
 
       const token = localStorage.getItem('token');
       await axios.put(endpoint, { 
@@ -139,6 +123,44 @@ const DepartmentDashboard = () => {
       fetchComplaints(user.department, user.district);
     } catch (error) {
       console.error('Error updating complaint status:', error);
+    } finally {
+      setActionLoading(null);
+    }
+  };
+
+  // Accept and assign complaint
+  const handleAcceptAndAssign = (complaint) => {
+    setAssignData({ officerName: '', officerPhone: '', complaintId: complaint.complaintId });
+    setShowAssignModal(true);
+  };
+
+  // Submit assignment
+  const submitAssignment = async () => {
+    if (!assignData.officerName || !assignData.officerPhone) {
+      alert('Please fill all fields');
+      return;
+    }
+    
+    setActionLoading(assignData.complaintId);
+    try {
+      const endpoint = `http://localhost:5000/api/complaints/update-status/${assignData.complaintId}`;
+
+      const token = localStorage.getItem('token');
+      await axios.put(endpoint, { 
+        status: 'Received at department',
+        assignedOfficer: assignData.officerName,
+        assignedOfficerPhone: assignData.officerPhone,
+        reason: `Complaint accepted and assigned to ${assignData.officerName} (${assignData.officerPhone})`
+      }, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+
+      setShowAssignModal(false);
+      setAssignData({ officerName: '', officerPhone: '', complaintId: '' });
+      fetchComplaints(user.department, user.district);
+    } catch (error) {
+      console.error('Error assigning complaint:', error);
+      alert('Failed to assign complaint');
     } finally {
       setActionLoading(null);
     }
@@ -273,7 +295,7 @@ const DepartmentDashboard = () => {
               <div>
                 <h1 className="text-lg md:text-xl font-semibold text-gray-900">{user.name} Dashboard</h1>
                 <p className="text-xs md:text-sm text-gray-500">
-                  {user.department === 'police' ? `District: ${user.district}` : 'Cyber Crime Department'}
+                  District: {user.district}
                 </p>
               </div>
             </div>
@@ -378,13 +400,11 @@ const DepartmentDashboard = () => {
                       Name
                     </th>
                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      {user.department === 'police' ? 'Complaint' : 'Subject'}
+                      Complaint
                     </th>
-                    {user.department === 'police' && (
-                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        District
-                      </th>
-                    )}
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      District
+                    </th>
                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Status
                     </th>
@@ -407,14 +427,12 @@ const DepartmentDashboard = () => {
                       </td>
                       <td className="px-4 py-4 text-sm text-gray-900">
                         <div className="max-w-xs truncate">
-                          {user.department === 'police' ? complaint.complaint : complaint.subject}
+                          {complaint.complaint}
                         </div>
                       </td>
-                      {user.department === 'police' && (
-                        <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
-                          {complaint.district}
-                        </td>
-                      )}
+                      <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {complaint.district}
+                      </td>
                       <td className="px-4 py-4 whitespace-nowrap">
                         <span className={`px-2 py-1 text-xs font-medium rounded-full ${
                           complaint.status === 'Resolved' ? 'bg-green-100 text-green-800' :
@@ -432,7 +450,7 @@ const DepartmentDashboard = () => {
                         {complaint.status === 'Requested' && (
                           <div className="flex flex-col md:flex-row md:space-x-2 space-y-1 md:space-y-0">
                             <button
-                              onClick={() => updateComplaintStatus(complaint.complaintId, 'Received at department')}
+                              onClick={() => handleAcceptAndAssign(complaint)}
                               disabled={actionLoading === complaint.complaintId}
                               className="flex items-center text-green-600 hover:text-green-800 px-2 py-1 rounded hover:bg-green-50 text-xs md:text-sm disabled:opacity-50"
                             >
@@ -441,7 +459,7 @@ const DepartmentDashboard = () => {
                               ) : (
                                 <CheckCircle className="w-3 h-3 md:w-4 md:h-4 mr-1" />
                               )}
-                              Accept
+                              Accept & Assign
                             </button>
                             <button
                               onClick={() => updateComplaintStatus(complaint.complaintId, 'Rejected', 'Rejected by department')}
@@ -636,6 +654,31 @@ const DepartmentDashboard = () => {
                   </div>
                 )}
 
+                {/* Assigned Officer Info */}
+                {(selectedComplaint.assignedOfficer || selectedComplaint.assignedOfficerPhone) && (
+                  <div className="bg-green-50 p-4 rounded-lg border border-green-200">
+                    <h3 className="text-base md:text-lg font-semibold text-green-900 mb-3 md:mb-4 flex items-center">
+                      <User className="w-4 h-4 md:w-5 md:h-5 mr-2" />
+                      Assigned Officer
+                    </h3>
+                    <div className="space-y-2">
+                      {selectedComplaint.assignedOfficer && (
+                        <div className="flex items-center">
+                          <span className="text-green-700 font-medium">Name: </span>
+                          <span className="text-green-900 ml-2">{selectedComplaint.assignedOfficer}</span>
+                        </div>
+                      )}
+                      {selectedComplaint.assignedOfficerPhone && (
+                        <div className="flex items-center">
+                          <Phone className="w-4 h-4 text-green-600 mr-2" />
+                          <span className="text-green-700 font-medium">Phone: </span>
+                          <span className="text-green-900 ml-2">{selectedComplaint.assignedOfficerPhone}</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+
                 {/* Department Response */}
                 {selectedComplaint.reason && (
                   <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
@@ -660,6 +703,65 @@ const DepartmentDashboard = () => {
                   className="px-3 md:px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors text-sm md:text-base"
                 >
                   Take Action
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Assign Officer Modal */}
+        {showAssignModal && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+            <div className="bg-white rounded-xl shadow-2xl w-full max-w-md">
+              <div className="p-6 border-b border-gray-200">
+                <h2 className="text-xl font-bold text-gray-900">Accept & Assign Complaint</h2>
+                <p className="text-sm text-gray-600 mt-1">Complaint ID: {assignData.complaintId}</p>
+              </div>
+
+              <div className="p-6 space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Officer Name *
+                  </label>
+                  <input
+                    type="text"
+                    value={assignData.officerName}
+                    onChange={(e) => setAssignData({...assignData, officerName: e.target.value})}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="Enter officer name"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Officer Phone *
+                  </label>
+                  <input
+                    type="tel"
+                    value={assignData.officerPhone}
+                    onChange={(e) => setAssignData({...assignData, officerPhone: e.target.value})}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="Enter officer phone number"
+                  />
+                </div>
+              </div>
+
+              <div className="p-6 border-t border-gray-200 flex justify-end space-x-3">
+                <button
+                  onClick={() => {
+                    setShowAssignModal(false);
+                    setAssignData({ officerName: '', officerPhone: '', complaintId: '' });
+                  }}
+                  className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={submitAssignment}
+                  disabled={actionLoading}
+                  className="px-4 py-2 text-white bg-green-600 rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50"
+                >
+                  {actionLoading ? 'Assigning...' : 'Accept & Assign'}
                 </button>
               </div>
             </div>

@@ -9,7 +9,7 @@ export default function HelpPage() {
     <div className="help-page">
       <header className="help-header">
         <h1>Help & Support</h1>
-        <p>Your complete guide to using HelpForYou effectively</p>
+        <p>Your complete guide to using Citizen Loop effectively</p>
       </header>
 
       {/* Basic Help Section */}
@@ -64,7 +64,7 @@ export default function HelpPage() {
           <li><strong>Strong Password:</strong> Use a mix of letters, numbers, and symbols for your account password.</li>
           <li><strong>Do Not Share Login:</strong> Your account is personal; never share credentials.</li>
           <li><strong>Logout:</strong> Always logout on shared devices.</li>
-          <li><strong>Suspicious Emails:</strong> Do not click on unknown links claiming to be from HelpForYou.</li>
+          <li><strong>Suspicious Emails:</strong> Do not click on unknown links claiming to be from Citizen Loop.</li>
         </ul>
       </section>
 
@@ -84,7 +84,7 @@ export default function HelpPage() {
         <p>
           For additional assistance, contact our support team:
           <br/>
-          <strong>Email:</strong> support@helpforyou.com
+          <strong>Email:</strong> support@Citizen Loop.com
           <br/>
           <strong>Phone:</strong> +91 9876543210
           <br/>
@@ -96,7 +96,7 @@ export default function HelpPage() {
       <section className="help-section">
         <h2><FaCogs className="icon"/> Feedback & Suggestions</h2>
         <p>
-          Help us improve HelpForYou! Share your feedback through the Contact page or via email. Your suggestions are valuable and help us make the platform better for everyone.
+          Help us improve Citizen Loop! Share your feedback through the Contact page or via email. Your suggestions are valuable and help us make the platform better for everyone.
         </p>
       </section>
 

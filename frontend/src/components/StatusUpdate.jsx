@@ -66,27 +66,12 @@ export default function UpdateComplaint() {
     setLoading(true);
 
     try {
-      let res;
-      let complaintType = "";
-
-      try {
-        res = await axios.get(
-          `http://localhost:5000/api/complaints/search/${complaintId.trim()}`
-        );
-        complaintType = "police";
-      } catch (policeError) {
-        try {
-          res = await axios.get(
-            `http://localhost:5000/api/cyber-complaints/search/${complaintId.trim()}`
-          );
-          complaintType = "cyber";
-        } catch (cyberError) {
-          throw new Error("Complaint not found in either system");
-        }
-      }
-
+      const res = await axios.get(
+        `http://localhost:5000/api/complaints/search/${complaintId.trim()}`
+      );
+      
       const data = res.data.complaint;
-      data.complaintType = complaintType;
+      data.complaintType = "police";
       setComplaintData(data);
       setStatus(data.status || "");
       setReason(data.reason || "");
@@ -111,14 +96,9 @@ export default function UpdateComplaint() {
     setError("");
 
     try {
-      let url = "";
-      if (complaintData.complaintType === "police") {
-        url = `http://localhost:5000/api/complaints/update-status/${complaintId}`;
-      } else {
-        url = `http://localhost:5000/api/cyber-complaints/update-status/${complaintId}`;
-      }
-
+      const url = `http://localhost:5000/api/complaints/update-status/${complaintId}`;
       const token = localStorage.getItem("token");
+      
       await axios.put(
         url,
         { status, reason },
@@ -445,7 +425,6 @@ export default function UpdateComplaint() {
                 <div className="mt-2 text-sm text-blue-700">
                   <ul className="list-disc list-inside space-y-1">
                     <li>Enter the Complaint ID to search for a specific complaint</li>
-                    <li>Both police and cyber complaints are supported</li>
                     <li>Update the status and add a reason for the status change</li>
                     <li>The complainant will receive an email notification about the update</li>
                   </ul>

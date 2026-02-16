@@ -6,7 +6,6 @@ export default defineConfig({
   plugins: [
     react(),
     obfuscatorPlugin({
-      // Options for obfuscation
       compact: true,
       controlFlowFlattening: true,
       controlFlowFlatteningThreshold: 1,
@@ -27,6 +26,7 @@ export default defineConfig({
     })
   ],
   build: {
-    minify: 'esbuild', 
+    sourcemap: false,   
+    minify: 'esbuild',  
   }
 })
