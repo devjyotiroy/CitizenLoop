@@ -14,7 +14,7 @@
     "grievance",
     "redressal"
   ],
-  "author": "Aayush Shivastava",
+  "author": "Dev",
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.2",
