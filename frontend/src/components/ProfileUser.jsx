@@ -74,7 +74,7 @@ const ProfilePage = () => {
 
   const fetchProfile = async () => {
     try {
-      const { data } = await axios.get("http://localhost:5000/api/users/profile", {
+      const { data } = await axios.get("https://citizenloop.onrender.com/api/users/profile", {
         headers: { Authorization: `Bearer ${token}` },
       });
       
@@ -88,7 +88,7 @@ const ProfilePage = () => {
       if (data.profilePic) {
         const url = data.profilePic.startsWith('http') 
           ? data.profilePic 
-          : `http://localhost:5000/uploads/${data.profilePic}`;
+          : `https://citizenloop.onrender.com/uploads/${data.profilePic}`;
         setPreviewUrl(url);
       }
     } catch (error) {
@@ -251,7 +251,7 @@ const ProfilePage = () => {
       if (profilePic) submitData.append("profilePic", profilePic);
 
       const { data } = await axios.put(
-        "http://localhost:5000/api/users/profile",
+        "https://citizenloop.onrender.com/api/users/profile",
         submitData,
         {
           headers: {
@@ -280,7 +280,7 @@ const ProfilePage = () => {
       if (data.profile.profilePic) {
         const url = data.profile.profilePic.startsWith('http')
           ? data.profile.profilePic
-          : `http://localhost:5000/uploads/${data.profile.profilePic}`;
+          : `https://citizenloop.onrender.com/uploads/${data.profile.profilePic}`;
         setPreviewUrl(url);
       }
     } catch (error) {
