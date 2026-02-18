@@ -21,7 +21,7 @@ const PoliceComplaintHistory = () => {
           return;
         }
 
-        const res = await axios.get("http://localhost:5000/api/complaints/my-complaints", {
+        const res = await axios.get("https://citizenloop.onrender.com/api/complaints/my-complaints", {
           headers: { Authorization: `Bearer ${token}` },
         });
 
