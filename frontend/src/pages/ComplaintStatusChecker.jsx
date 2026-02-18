@@ -18,7 +18,7 @@ export default function ComplaintStatus() {
     setComplaint(null);
 
     try {
-      const res = await axios.get(`http://localhost:5000/api/complaints/search/${complaintId.trim()}`);
+      const res = await axios.get(`https://citizenloop.onrender.com/api/complaints/search/${complaintId.trim()}`);
       
       if (res && res.data && res.data.success && res.data.complaint) {
         setComplaint(res.data.complaint);
