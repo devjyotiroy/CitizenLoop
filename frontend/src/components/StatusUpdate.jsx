@@ -67,7 +67,7 @@ export default function UpdateComplaint() {
 
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/complaints/search/${complaintId.trim()}`
+        `https://citizenloop.onrender.com/api/complaints/search/${complaintId.trim()}`
       );
       
       const data = res.data.complaint;
@@ -96,7 +96,7 @@ export default function UpdateComplaint() {
     setError("");
 
     try {
-      const url = `http://localhost:5000/api/complaints/update-status/${complaintId}`;
+      const url = `https://citizenloop.onrender.com/api/complaints/update-status/${complaintId}`;
       const token = localStorage.getItem("token");
       
       await axios.put(
