@@ -92,8 +92,8 @@ const DepartmentDashboard = () => {
     setLoading(true);
     try {
       const endpoint = district === 'All Districts' 
-        ? 'http://localhost:5000/api/complaints'
-        : `http://localhost:5000/api/complaints?district=${district}`;
+        ? 'https://citizenloop.onrender.com/api/complaints'
+        : `https://citizenloop.onrender.com/api/complaints?district=${district}`;
 
       const response = await axios.get(endpoint);
       setComplaints(response.data.complaints || []);
@@ -109,7 +109,7 @@ const DepartmentDashboard = () => {
   const updateComplaintStatus = async (complaintId, newStatus, reason = '') => {
     setActionLoading(complaintId);
     try {
-      const endpoint = `http://localhost:5000/api/complaints/update-status/${complaintId}`;
+      const endpoint = `https://citizenloop.onrender.com/api/complaints/update-status/${complaintId}`;
 
       const token = localStorage.getItem('token');
       await axios.put(endpoint, { 
@@ -143,7 +143,7 @@ const DepartmentDashboard = () => {
     
     setActionLoading(assignData.complaintId);
     try {
-      const endpoint = `http://localhost:5000/api/complaints/update-status/${assignData.complaintId}`;
+      const endpoint = `https://citizenloop.onrender.com/api/complaints/update-status/${assignData.complaintId}`;
 
       const token = localStorage.getItem('token');
       await axios.put(endpoint, { 
